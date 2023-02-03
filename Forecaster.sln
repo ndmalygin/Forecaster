@@ -1,4 +1,4 @@
-
+﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForecastsRabbitMQProcessor", "ForecastsRabbitMQProcessor\ForecastsRabbitMQProcessor.csproj", "{3ABBDEDF-6CE3-4F8F-927A-10B22EFF72B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForecastsConsumerConsole", "ForecastsConsumerConsole\ForecastsConsumerConsole.csproj", "{81314B86-26F0-4547-892E-D8B7817450A6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForecastsBlazor", "ForecastsBlazor\ForecastsBlazor.csproj", "{5EE3EC5B-350A-48C3-9916-5AD8921C340E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,5 +38,9 @@ Global
 		{81314B86-26F0-4547-892E-D8B7817450A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{81314B86-26F0-4547-892E-D8B7817450A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{81314B86-26F0-4547-892E-D8B7817450A6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EE3EC5B-350A-48C3-9916-5AD8921C340E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EE3EC5B-350A-48C3-9916-5AD8921C340E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EE3EC5B-350A-48C3-9916-5AD8921C340E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EE3EC5B-350A-48C3-9916-5AD8921C340E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
