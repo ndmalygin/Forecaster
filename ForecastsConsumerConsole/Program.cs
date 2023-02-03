@@ -1,7 +1,13 @@
-﻿internal partial class Program
+﻿using System.Text;
+using ForecastsRabbitMQProcessor;
+
+internal class Program
 {
     private static void Main(string[] args)
     {
-        Console.WriteLine("Hello, World!");
+        var rabbitMQDispatcher = new RabbitMQDispatcher("localhost");
+        rabbitMQDispatcher.ConsumeMessage();
+
+        Console.Read();
     }
 }

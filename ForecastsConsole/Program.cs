@@ -1,5 +1,5 @@
 ﻿using ForecastsCollector;
-using ForecastsPublisher;
+using ForecastsRabbitMQProcessor;
 
 internal class Program
 {

@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31903.59
@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForecastsCollector", "Forec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForecastsConsole", "ForecastsConsole\ForecastsConsole.csproj", "{660C581B-4FBB-4788-9659-E7AA765425DD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForecastsPublisher", "ForecastsPublisher\ForecastsPublisher.csproj", "{3ABBDEDF-6CE3-4F8F-927A-10B22EFF72B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForecastsRabbitMQProcessor", "ForecastsRabbitMQProcessor\ForecastsRabbitMQProcessor.csproj", "{3ABBDEDF-6CE3-4F8F-927A-10B22EFF72B9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForecastsConsumerConsole", "ForecastsConsumerConsole\ForecastsConsumerConsole.csproj", "{81314B86-26F0-4547-892E-D8B7817450A6}"
 EndProject
