@@ -1,10 +1,10 @@
-﻿namespace ForecastsCollector
-{
-    using System.Diagnostics;
-    using ForecastsCollector.Enums;
-    using ForecastsCollector.JsonEntities;
-    using Newtonsoft.Json;
+﻿using System.Diagnostics;
+using ForecastsCollector.Enums;
+using ForecastsCollector.JsonEntities;
+using Newtonsoft.Json;
 
+namespace ForecastsCollector
+{
     public class OpenWeatherAPIController
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
