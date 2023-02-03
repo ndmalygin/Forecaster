@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\ForecastsCollector\ForecastsCollector.csproj" />
     <ProjectReference Include="..\ForecastsRabbitMQProcessor\ForecastsRabbitMQProcessor.csproj" />
+    <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
