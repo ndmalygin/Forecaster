@@ -49,7 +49,7 @@ namespace ForecastsCollector
 
         private string GetWeatherCallUri(double lat, double lon, ForecastUnits units)
         {
-            return $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units={Enum.GetName(units)}&appid={_apiKey}";
+            return $"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&units={Enum.GetName(units)}&lang=en&appid={_apiKey}";
         }
     }
 }

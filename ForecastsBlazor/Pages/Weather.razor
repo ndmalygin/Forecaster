@@ -1,0 +1,29 @@
+﻿@page "/weather"
+@using ForecastsCommon;
+@using ForecastsRabbitMQProcessor;
+<PageTitle>Current weather</PageTitle>
+
+<h1>Current weather</h1>
+
+<p role="status">@_currentWeather</p>
+
+@code {
+    private string _currentWeather = string.Empty;
+
+    protected override void OnInitialized() 
+    {   
+        var weatherExtractor = new WeatherExtractor();
+        var rabbitMQDispatcher = new RabbitMQDispatcher("localhost");
+        rabbitMQDispatcher.Received += (_, message) => 
+        { 
+            var weather = weatherExtractor.ExtractMandatoryDataObject(message);
+            _currentWeather = $"Weather in {weather.City} is: temperature {weather.Temperature}C, pressure {weather.Pressure}hPa, wind {weather.Wind}meter/sec, humidity {weather.Humidity}%";
+             InvokeAsync(() =>
+                {
+                    StateHasChanged();
+                });
+        };
+
+        rabbitMQDispatcher.ConsumeMessage();
+    }
+}

@@ -13,9 +13,15 @@ public class WeatherExtractor
             Temperature = obj.main.temp,
             Humidity = obj.main.humidity,
             Pressure = obj.main.pressure,
-            Wind = obj.wind.speed
+            Wind = obj.wind.speed,
+            City = obj.name
         };
 
         return JsonConvert.SerializeObject(weather);
+    }
+
+    public Weather ExtractMandatoryDataObject(string json)
+    {
+        return JsonConvert.DeserializeObject<Weather>(json);
     }
 }
