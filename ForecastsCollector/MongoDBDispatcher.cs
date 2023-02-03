@@ -1,3 +1,4 @@
+using System;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -9,6 +10,7 @@ namespace ForecastsCollector
         private readonly string _connectionString;
         private readonly string _dbName;
         private readonly MongoClient _client;
+        
         public MongoDBDispatcher(string connectionString)
         {
             _connectionString = connectionString;

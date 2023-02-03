@@ -5,15 +5,20 @@ using Newtonsoft.Json;
 
 namespace ForecastsCollector
 {
-    public class OpenWeatherAPIController
+    public class OpenWeatherAPIController : IDisposable
     {
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly HttpClient _client = new();
-
         private readonly string _apiKey;
+
         public OpenWeatherAPIController(string apiKey)
         {
             _apiKey = apiKey;
+        }
+
+        public void Dispose()
+        {
+            _client.Dispose();
         }
 
         public async Task<string> GetWeather(string cityName)

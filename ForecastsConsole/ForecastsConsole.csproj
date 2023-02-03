@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ForecastsCollector\ForecastsCollector.csproj" />
+    <ProjectReference Include="..\ForecastsPublisher\ForecastsPublisher.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
