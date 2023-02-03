@@ -26,12 +26,10 @@ namespace ForecastsCollector
             try
             {
                 var geoUri = GetGeocodeCallUri(cityName, string.Empty, string.Empty, 1);
-                Logger.Info("Getting geocodes");
                 string responseBody = await _client.GetStringAsync(geoUri);
                 var geoCodes = JsonConvert.DeserializeObject<List<GeoCodes>>(responseBody);
                 Debug.Assert(geoCodes?.Count == 1);
 
-                Logger.Info("Getting weather");
                 var weatherUri = GetWeatherCallUri(geoCodes[0].lat, geoCodes[0].lon, ForecastUnits.metric);
                 responseBody = await _client.GetStringAsync(weatherUri);
 
