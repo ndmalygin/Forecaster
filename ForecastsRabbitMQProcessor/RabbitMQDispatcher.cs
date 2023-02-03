@@ -31,7 +31,6 @@ namespace ForecastsRabbitMQProcessor
 
         public void PublishMessage(string message)
         {
-            Logger.Info("Publish message");
             var body = Encoding.UTF8.GetBytes(message);
             try
             {
@@ -44,6 +43,7 @@ namespace ForecastsRabbitMQProcessor
             catch (Exception e)
             {
                 Logger.Error(e);
+                throw;
             }
         }
 
@@ -57,7 +57,6 @@ namespace ForecastsRabbitMQProcessor
             var consumer = new EventingBasicConsumer(_channel);
             consumer.Received += (model, ea) =>
             {
-                Logger.Info("Received message");
                 byte[] body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
                 Received?.Invoke(this, message);

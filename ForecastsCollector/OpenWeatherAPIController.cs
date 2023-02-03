@@ -40,7 +40,7 @@ namespace ForecastsCollector
             catch (Exception e)
             {
                 Logger.Error(e);
-                return await Task.FromResult(string.Empty);
+                throw;
             }
         }
 
