@@ -1,6 +1,6 @@
-﻿using System.Diagnostics;
-namespace ForecastsCollector
+﻿namespace ForecastsCollector
 {
+    using System.Diagnostics;
     using ForecastsCollector.Enums;
     using ForecastsCollector.JsonEntities;
     using Newtonsoft.Json;
