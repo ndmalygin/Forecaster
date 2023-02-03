@@ -9,6 +9,7 @@ namespace ForecastsRabbitMQProcessor
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly string _rabbitUri;
         private readonly IModel _channel;
+        public EventHandler<string> Received;
 
         public RabbitMQDispatcher(string rabbitUri)
         {
@@ -59,7 +60,7 @@ namespace ForecastsRabbitMQProcessor
                 Logger.Info("Consuming message");
                 byte[] body = ea.Body.ToArray();
                 var message = Encoding.UTF8.GetString(body);
-                Console.WriteLine($" [x] {message}");
+                Received?.Invoke(this, message);
             };
             _channel.BasicConsume(queue: queueName,
                                  autoAck: true,
