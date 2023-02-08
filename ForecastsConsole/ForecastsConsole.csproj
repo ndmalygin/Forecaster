@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
-    <ProjectReference Include="..\ForecastsCollector\ForecastsCollector.csproj"/>
-    <ProjectReference Include="..\ForecastsRabbitMQProcessor\ForecastsRabbitMQProcessor.csproj"/>
-    <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj"/>
+    <ProjectReference Include="..\ForecastsCollector\ForecastsCollector.csproj" />
+    <ProjectReference Include="..\ForecastsRabbitMQProcessor\ForecastsRabbitMQProcessor.csproj" />
+    <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Config.Net" Version="5.1.5"/>
+    <PackageReference Include="Config.Net" Version="5.1.5" />
   </ItemGroup>
   <PropertyGroup>
     <OutputType>Exe</OutputType>

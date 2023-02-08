@@ -4,4 +4,5 @@ public interface ISettings
     string rabbitmq_connection { get; set; }
     string api_key { get; set; }
     string[] cities { get; set; }
+    int interval { get; set; }
 }

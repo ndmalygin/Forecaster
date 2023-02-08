@@ -26,5 +26,5 @@ while (true)
         Console.WriteLine($"{DateTime.Now} {weatherData}");
     }
 
-    Thread.Sleep(120000);
+    Thread.Sleep(settings.interval);
 }
