@@ -35,10 +35,9 @@ namespace ForecastsCollector
             }
         }
 
-        public Weather[] GetWeathers(string city)
+        public IQueryable<Weather> GetWeathers(string city)
         {
-            var collection = _client.GetDatabase(_dbName).GetCollection<Weather>(city).AsQueryable();
-            return collection.ToArray().DistinctBy(v => v.Date).ToArray();
+            return _client.GetDatabase(_dbName).GetCollection<Weather>(city).AsQueryable().GroupBy(v => v.date, g => g).Select(v => v.First()).OrderBy(d => d.date);
         }
     }
 }

@@ -1,13 +1,12 @@
 ﻿@page "/fetchdata"
 @using ForecastsBlazor.Data
-@using ForecastsCommon.JsonEntities
 @inject WeatherForecastService ForecastService
 
 <PageTitle>Weather data</PageTitle>
 
 <h1>Weather data</h1>
 
-<p>This component demonstrates fetching data from a service.</p>
+<p>This component demonstrates fetching data from a weather collection service.</p>
 
 @if (forecasts == null)
 {
@@ -45,6 +44,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        forecasts = await ForecastService.GetForecastAsync();
+        var data = await ForecastService.GetForecastAsync();
+        forecasts = data.ToArray();
     }
 }

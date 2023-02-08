@@ -1,0 +1,73 @@
+@page "/graphdata"
+@using ChartJs.Blazor.Util
+@using ChartJs.Blazor.LineChart
+@using ForecastsBlazor.Data
+@inject WeatherForecastService ForecastService
+
+<PageTitle>Weather graph data</PageTitle>
+
+<h1>Weather graph data</h1>
+
+<p>This component demonstrates fetching data from a weather collection service to plots.</p>
+
+@if (_temperature == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <Chart Config="_temperature"></Chart>
+    <Chart Config="_pressure"></Chart>
+    <Chart Config="_humidity"></Chart>
+    <Chart Config="_speed"></Chart>
+}
+
+@code {
+    private LineConfig _temperature = new LineConfig();
+    private LineConfig _pressure = new LineConfig();
+    private LineConfig _humidity = new LineConfig();
+    private LineConfig _speed = new LineConfig();
+    protected override async Task OnInitializedAsync()
+    {
+        var forecasts = await ForecastService.GetForecastAsync();
+        var forecastsArr = forecasts.ToArray();
+        var labels = forecastsArr.Select(v => v.Date);
+        foreach (var label in labels)
+        {
+            _temperature.Data.Labels.Add(label.ToString());
+            _pressure.Data.Labels.Add(label.ToString());
+            _humidity.Data.Labels.Add(label.ToString());
+            _speed.Data.Labels.Add(label.ToString());
+        }
+
+        var temperature = forecastsArr.Select(v => v.Main.Temperature);
+        LineDataset<double> datasetT = new LineDataset<double>(temperature)
+            {
+                BackgroundColor = ColorUtil.ColorHexString(255, 99, 132),
+                Label = "Temperature (C)"
+            };
+        var pressure = forecastsArr.Select(v => v.Main.Pressure);
+        LineDataset<double> datasetP = new LineDataset<double>(pressure)
+            {
+                BackgroundColor = ColorUtil.ColorHexString(75, 192, 192),
+                Label = "Pressure (hPa)"
+            };
+        var humidity = forecastsArr.Select(v => v.Main.Humidity);
+        LineDataset<double> datasetH = new LineDataset<double>(humidity)
+            {
+                BackgroundColor = ColorUtil.ColorHexString(54, 162, 235),
+                Label = "Humidity (%)"
+            };
+        var speed = forecastsArr.Select(v => v.Wind.Speed);
+        LineDataset<double> datasetS = new LineDataset<double>(speed)
+            {
+                BackgroundColor = ColorUtil.ColorHexString(255, 205, 86),
+                Label = "Wind (m/s)"
+            };
+
+        _temperature.Data.Datasets.Add(datasetT);
+        _pressure.Data.Datasets.Add(datasetP);
+        _humidity.Data.Datasets.Add(datasetH);
+        _speed.Data.Datasets.Add(datasetS);
+    }
+}

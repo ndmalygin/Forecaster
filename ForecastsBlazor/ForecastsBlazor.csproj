@@ -5,8 +5,12 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ForecastsCollector\ForecastsCollector.csproj" />
-    <ProjectReference Include="..\ForecastsRabbitMQProcessor\ForecastsRabbitMQProcessor.csproj" />
-    <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj" />
+    <ProjectReference Include="..\ForecastsCollector\ForecastsCollector.csproj"/>
+    <ProjectReference Include="..\ForecastsRabbitMQProcessor\ForecastsRabbitMQProcessor.csproj"/>
+    <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj"/>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="ChartJs.Blazor" Version="1.1.0"/>
+    <PackageReference Include="ChartJs.Blazor.Fork" Version="2.0.2"/>
   </ItemGroup>
 </Project>
