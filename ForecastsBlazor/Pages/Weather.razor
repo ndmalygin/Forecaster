@@ -1,6 +1,7 @@
 ﻿@page "/weather"
 @using ForecastsCommon;
 @using ForecastsRabbitMQProcessor;
+@using Config.Net;
 <PageTitle>Current weather</PageTitle>
 
 <h1>Current weather</h1>
@@ -14,8 +15,12 @@
 
     protected override void OnInitialized() 
     {   
+        var settings = new ConfigurationBuilder<ISettings>()
+           .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"forecaster.ini"))
+        .Build();
+        
         var weatherExtractor = new WeatherExtractor();
-        var rabbitMQDispatcher = new RabbitMQDispatcher("localhost");
+        var rabbitMQDispatcher = new RabbitMQDispatcher(settings.rabbitmq_connection);
         rabbitMQDispatcher.Received += (_, message) => 
         { 
             var weather = weatherExtractor.ExtractMandatoryDataObject(message);
