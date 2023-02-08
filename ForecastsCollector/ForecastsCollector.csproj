@@ -11,6 +11,9 @@
     <PackageReference Include="NLog.Mongo" Version="4.6.0.217" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj" />
+  </ItemGroup>
+  <ItemGroup>
     <Content Include="NLog.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

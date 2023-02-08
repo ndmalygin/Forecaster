@@ -1,4 +1,5 @@
 using System;
+using ForecastsCommon.JsonEntities;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
@@ -32,6 +33,12 @@ namespace ForecastsCollector
                 Logger.Error(e);
                 throw;
             }
+        }
+
+        public Weather[] GetWeathers(string city)
+        {
+            var collection = _client.GetDatabase(_dbName).GetCollection<Weather>(city).AsQueryable();
+            return collection.ToArray().DistinctBy(v => v.Date).ToArray();
         }
     }
 }

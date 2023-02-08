@@ -17,7 +17,7 @@
         rabbitMQDispatcher.Received += (_, message) => 
         { 
             var weather = weatherExtractor.ExtractMandatoryDataObject(message);
-            _currentWeather = $"Weather in {weather.City} is: temperature {weather.Temperature}C, pressure {weather.Pressure}hPa, wind {weather.Wind}meter/sec, humidity {weather.Humidity}%";
+            _currentWeather = $"Weather in {weather.City} is: temperature {weather.Main.Temperature}C, pressure {weather.Main.Pressure}hPa, wind {weather.Wind.Speed}meter/sec, humidity {weather.Main.Humidity}%";
              InvokeAsync(() =>
                 {
                     StateHasChanged();

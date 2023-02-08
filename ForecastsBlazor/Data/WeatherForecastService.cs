@@ -1,19 +1,11 @@
+using ForecastsCommon.JsonEntities;
+using ForecastsCollector;
 namespace ForecastsBlazor.Data;
-
 public class WeatherForecastService
 {
-    private static readonly string[] Summaries = new[]
+    public Task<Weather[]> GetForecastAsync()
     {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
-
-    public Task<WeatherForecast[]> GetForecastAsync(DateOnly startDate)
-    {
-        return Task.FromResult(Enumerable.Range(1, 5).Select(index => new WeatherForecast
-        {
-            Date = startDate.AddDays(index),
-            TemperatureC = Random.Shared.Next(-20, 55),
-            Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-        }).ToArray());
+        var mongoDBDispatcher = new MongoDBDispatcher("mongodb://localhost:27017");
+         return Task.FromResult(mongoDBDispatcher.GetWeathers("Antalya"));
     }
 }
