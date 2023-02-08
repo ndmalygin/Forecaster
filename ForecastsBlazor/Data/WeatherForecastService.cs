@@ -4,7 +4,7 @@ using ForecastsCollector;
 namespace ForecastsBlazor.Data;
 public class WeatherForecastService
 {
-    private string _mongoUri;
+    private readonly string _mongoUri;
     public WeatherForecastService()
     {
         var settings = new ConfigurationBuilder<ISettings>()
