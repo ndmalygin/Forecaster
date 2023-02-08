@@ -1,12 +1,17 @@
-﻿using ForecastsCollector;
+﻿using Config.Net;
+using ForecastsCollector;
 using ForecastsCommon;
 using ForecastsRabbitMQProcessor;
 
-var mongoDBDispatcher = new MongoDBDispatcher("mongodb://localhost:27017");
-using var forecastsCollector = new OpenWeatherAPIController("");
-using var rabbitMQDispatcher = new RabbitMQDispatcher("localhost");
+var settings = new ConfigurationBuilder<ISettings>()
+   .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"forecaster.ini"))
+   .Build();
 
-var cities = new[] { "Antalya", "Krasnoyarsk", "Saint-Petersburg", "Phuket" };
+var cities = settings.cities;
+
+var mongoDBDispatcher = new MongoDBDispatcher(settings.mongodb_connection);
+using var rabbitMQDispatcher = new RabbitMQDispatcher(settings.rabbitmq_connection);
+using var forecastsCollector = new OpenWeatherAPIController(settings.api_key);
 
 while (true)
 {
@@ -18,7 +23,7 @@ while (true)
         var weatherMandatory = weatherExtractor.ExtractMandatoryData(weatherData);
         rabbitMQDispatcher.PublishMessage(weatherMandatory);
 
-        Console.WriteLine(weatherData);
+        Console.WriteLine($"{DateTime.Now} {weatherData}");
     }
 
     Thread.Sleep(120000);
