@@ -8,24 +8,33 @@
 
 <p>This component demonstrates fetching data from a weather collection service.</p>
 
-@if (forecasts == null)
+@if (templates == null)
 {
     <p><em>Loading...</em></p>
 }
 else
 {
+    <p>
+    <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
+        @foreach (var template in templates)
+            {
+                <option value=@template>@template</option>
+            }
+        </select>
+    </p>
+
     <table class="table">
-        <thead>
-            <tr>
-                <th>Date</th>
-                <th>Temperature (C)</th>
-                <th>Pressure (hPa)</th>
-                <th>Humidity (%)</th>
-                <th>Wind (m/s)</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var forecast in forecasts)
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Temperature (C)</th>
+            <th>Pressure (hPa)</th>
+            <th>Humidity (%)</th>
+            <th>Wind (m/s)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var forecast in forecasts)
             {
                 <tr>
                     <td>@forecast.Date</td>
@@ -40,11 +49,17 @@ else
 }
 
 @code {
-    private ForecastsCommon.JsonEntities.Weather[]? forecasts;
+    private ForecastsCommon.JsonEntities.Weather[] forecasts = new ForecastsCommon.JsonEntities.Weather[0];
+    private string selectedCity = string.Empty;
+    private string[] templates = new string[] { "Select city" };
 
+    private async void SelectedCityChanged(ChangeEventArgs e)
+    {
+        selectedCity = e.Value?.ToString() ?? templates[0];
+        forecasts = await ForecastService.GetForecastAsync(selectedCity);
+    }
     protected override async Task OnInitializedAsync()
     {
-        var data = await ForecastService.GetForecastAsync();
-        forecasts = data.ToArray();
+        templates = templates.Union(await ForecastService.GetCitiesNamesAsync()).ToArray();
     }
 }

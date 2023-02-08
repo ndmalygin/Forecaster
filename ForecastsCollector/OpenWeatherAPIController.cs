@@ -21,7 +21,7 @@ namespace ForecastsCollector
             _client.Dispose();
         }
 
-        public async Task<string> GetWeather(string cityName)
+        public async Task<string> GetWeatherAsync(string cityName)
         {
             try
             {
