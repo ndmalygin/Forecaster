@@ -5,6 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Config.Net" Version="5.1.5" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ForecastsCollector\ForecastsCollector.csproj"/>
     <ProjectReference Include="..\ForecastsRabbitMQProcessor\ForecastsRabbitMQProcessor.csproj"/>
     <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj"/>
