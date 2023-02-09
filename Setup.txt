@@ -13,7 +13,7 @@ To check container's ip, run in console:
 	docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' YOUR_CONTAINER_ID
 
 docker build -f ./Dockerfile.collector -t dotnetcoreconsole .
-docker run dotnetcoreconsole:latest
+docker run dotnetcoreconsole:latest /bin/bash
 docker build -t dotnetcoreapp .
 docker run -p 8080:5000 -it dotnetcoreapp:latest
 
