@@ -5,7 +5,7 @@ VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForecastsCollector", "ForecastsCollector\ForecastsCollector.csproj", "{04C03D77-2F6A-49F7-BEEC-2557D1F1A4B2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForecastsConsole", "ForecastsConsole\ForecastsConsole.csproj", "{660C581B-4FBB-4788-9659-E7AA765425DD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForecastsServiceApp", "ForecastsServiceApp\ForecastsServiceApp.csproj", "{660C581B-4FBB-4788-9659-E7AA765425DD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ForecastsRabbitMQDispatcher", "ForecastsRabbitMQDispatcher\ForecastsRabbitMQDispatcher.csproj", "{3ABBDEDF-6CE3-4F8F-927A-10B22EFF72B9}"
 EndProject
