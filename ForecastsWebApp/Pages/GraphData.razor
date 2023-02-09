@@ -13,23 +13,39 @@
 @if (_temperature == null)
 {
     <p>
-        <em>Loading...</em>
-    </p>
+    <em>Loading...</em>
+</p>
 }
 else
 {
     <p>
-        <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
-            @foreach (var template in templates)
+    <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
+        @foreach (var template in templates)
             {
                 <option value=@template>@template</option>
             }
         </select>
     </p>
-    <Chart Config="_temperature"></Chart>
-    <Chart Config="_pressure"></Chart>
-    <Chart Config="_humidity"></Chart>
-    <Chart Config="_speed"></Chart>
+    <div>
+        <table class="form-control" style="width:100%">
+            <tr style="height:50%">
+                <td style="width:25%">
+                    <Chart Config="_temperature"></Chart>
+                </td>
+                <td style="width:25%">
+                    <Chart Config="_pressure"></Chart>
+                </td>
+            </tr>
+            <tr style="height:50%">
+                <td style="width:25%">
+                    <Chart Config="_humidity"></Chart>
+                </td>
+                <td style="width:25%">
+                    <Chart Config="_speed"></Chart>
+                </td>
+            </tr>
+        </table>
+    </div>
 }
 
 @code {
@@ -40,6 +56,14 @@ else
 
     private string selectedCity = string.Empty;
     private string[] templates = { "Select city" };
+
+    private string Caption => isMoving ? "Start Spinning" : "Stop Spinning";
+    private bool isMoving = true;
+
+    private void Toggle()
+    {
+        isMoving = !isMoving;
+    }
 
     private async void SelectedCityChanged(ChangeEventArgs e)
     {
@@ -66,28 +90,28 @@ else
 
         var temperature = forecastsArr.Select(v => v.Main.Temperature);
         var datasetT = new LineDataset<double>(temperature)
-        {
-            BackgroundColor = ColorUtil.ColorHexString(255, 99, 132),
-            Label = "Temperature (C)"
-        };
+            {
+                BackgroundColor = ColorUtil.ColorHexString(255, 99, 132),
+                Label = "Temperature (C)"
+            };
         var pressure = forecastsArr.Select(v => v.Main.Pressure);
         var datasetP = new LineDataset<double>(pressure)
-        {
-            BackgroundColor = ColorUtil.ColorHexString(75, 192, 192),
-            Label = "Pressure (hPa)"
-        };
+            {
+                BackgroundColor = ColorUtil.ColorHexString(75, 192, 192),
+                Label = "Pressure (hPa)"
+            };
         var humidity = forecastsArr.Select(v => v.Main.Humidity);
         var datasetH = new LineDataset<double>(humidity)
-        {
-            BackgroundColor = ColorUtil.ColorHexString(54, 162, 235),
-            Label = "Humidity (%)"
-        };
+            {
+                BackgroundColor = ColorUtil.ColorHexString(54, 162, 235),
+                Label = "Humidity (%)"
+            };
         var speed = forecastsArr.Select(v => v.Wind.Speed);
         var datasetS = new LineDataset<double>(speed)
-        {
-            BackgroundColor = ColorUtil.ColorHexString(255, 205, 86),
-            Label = "Wind (m/s)"
-        };
+            {
+                BackgroundColor = ColorUtil.ColorHexString(255, 205, 86),
+                Label = "Wind (m/s)"
+            };
 
         _temperature.Data.Datasets.Add(datasetT);
         _pressure.Data.Datasets.Add(datasetP);
