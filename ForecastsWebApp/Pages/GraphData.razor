@@ -19,46 +19,46 @@
 else
 {
     <table class="form-control" cellpadding="5" style="border:0">
-        <tr style="height:50px">
+    <tr style="height:50px">
+        <td style="width:150px">
+            <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
+                @foreach (var template in cityTemplates)
+                    {
+                        <option value=@template>@template</option>
+                    }
+                </select>
+            </td>
             <td style="width:150px">
-                <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
-                    @foreach (var template in cityTemplates)
-                        {
-                            <option value=@template>@template</option>
-                        }
-                    </select>
-                </td>
-                <td style="width:150px" >
-                    <select class="form-control" style="width:150px" @onchange=SelectedPeriodChanged>
-                        @foreach (var template in periodTemplates)
-                        {
-                            <option value=@template>@template</option>
-                        }
-                    </select>
-                </td>
-                <td style="width:150px">
-                        <button class="form-control" @onclick="Toggle">@Caption</button>
-                </td>
-            </tr>
-        </table>
-        <table class="form-control" style="width:100%">
-            <tr style="height:50%">
-                <td style="width:25%">
-                    <Chart Config="_temperature"></Chart>
-                </td>
-                <td style="width:25%">
-                    <Chart Config="_pressure"></Chart>
-                </td>
-            </tr>
-            <tr style="height:50%">
-                <td style="width:25%">
-                    <Chart Config="_humidity"></Chart>
-                </td>
-                <td style="width:25%">
-                    <Chart Config="_speed"></Chart>
-                </td>
-            </tr>
-        </table>
+                <select class="form-control" style="width:150px" @onchange=SelectedPeriodChanged>
+                    @foreach (var template in periodTemplates)
+                    {
+                        <option value=@template>@template</option>
+                    }
+                </select>
+            </td>
+            <td style="width:150px">
+                <button class="form-control" @onclick="Toggle">@Caption</button>
+            </td>
+        </tr>
+    </table>
+    <table class="form-control" style="width:100%">
+        <tr style="height:50%">
+            <td style="width:25%">
+                <Chart Config="_temperature"></Chart>
+            </td>
+            <td style="width:25%">
+                <Chart Config="_pressure"></Chart>
+            </td>
+        </tr>
+        <tr style="height:50%">
+            <td style="width:25%">
+                <Chart Config="_humidity"></Chart>
+            </td>
+            <td style="width:25%">
+                <Chart Config="_speed"></Chart>
+            </td>
+        </tr>
+    </table>
 }
 
 @code {
@@ -68,25 +68,33 @@ else
     private readonly LineConfig _speed = new();
 
     private string selectedCity = string.Empty;
+    private string selectedPeriod = string.Empty;
     private string[] cityTemplates = { "Select city" };
     private string[] periodTemplates = { "Select period", "Day", "Week", "Month", "All" };
-    private string Caption => isMoving ? "All values" : "Distinct values";
-    private bool isMoving = true;
+    private string Caption => allValuesMode ? "All values" : "Distinct values";
+    private bool allValuesMode = true;
 
     private void Toggle()
     {
-        isMoving = !isMoving;
-
-        //todo
+        allValuesMode = !allValuesMode;
+        LoadData();
     }
 
-    private async void SelectedPeriodChanged(ChangeEventArgs e)
+    private void SelectedPeriodChanged(ChangeEventArgs e)
     {
-        //todo
+        selectedPeriod = e.Value?.ToString() ?? periodTemplates[0];
+        LoadData();
     }
-    private async void SelectedCityChanged(ChangeEventArgs e)
+    private void SelectedCityChanged(ChangeEventArgs e)
     {
         selectedCity = e.Value?.ToString() ?? cityTemplates[0];
+        LoadData();
+    }
+
+    private async void LoadData()
+    {
+        if (string.IsNullOrEmpty(selectedCity) || string.IsNullOrEmpty(selectedPeriod))
+            return;
 
         _temperature.Data.Labels.Clear();
         _temperature.Data.Datasets.Clear();
@@ -97,7 +105,7 @@ else
         _speed.Data.Labels.Clear();
         _speed.Data.Datasets.Clear();
 
-        var forecastsArr = await ForecastService.GetForecastAsync(selectedCity);
+        var forecastsArr = await ForecastService.GetForecastAsync(selectedCity, selectedPeriod, allValuesMode);
         var labels = forecastsArr.Select(v => v.Date);
         foreach (var label in labels)
         {
@@ -142,5 +150,4 @@ else
     {
         cityTemplates = cityTemplates.Union(await ForecastService.GetCitiesNamesAsync()).ToArray();
     }
-
 }

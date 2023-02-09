@@ -58,7 +58,7 @@ else
     private async void SelectedCityChanged(ChangeEventArgs e)
     {
         selectedCity = e.Value?.ToString() ?? templates[0];
-        forecasts = await ForecastService.GetForecastAsync(selectedCity);
+        forecasts = await ForecastService.GetForecastAsync(selectedCity, "All", true);
     }
 
     protected override async Task OnInitializedAsync()
