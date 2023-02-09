@@ -14,7 +14,7 @@ public class WeatherExtractor
             {
                 Temperature = obj?.main.temp,
                 Humidity = obj?.main.humidity,
-                Pressure = obj?.main.pressure,
+                Pressure = obj?.main.pressure
             },
             Wind = new Wind
             {

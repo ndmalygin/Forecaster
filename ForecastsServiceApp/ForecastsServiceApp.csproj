@@ -1,22 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <ItemGroup>
-    <ProjectReference Include="..\ForecastsCollector\ForecastsCollector.csproj" />
-    <ProjectReference Include="..\ForecastsRabbitMQDispatcher\ForecastsRabbitMQDispatcher.csproj" />
-    <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Config.Net" Version="5.1.5" />
-  </ItemGroup>
-  <PropertyGroup>
-    <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <RootNamespace>ForecastsServiceApp</RootNamespace>
-  </PropertyGroup>
-  <ItemGroup>
-    <Content Include="forecaster.ini">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
+    <ItemGroup>
+        <ProjectReference Include="..\ForecastsCollector\ForecastsCollector.csproj"/>
+        <ProjectReference Include="..\ForecastsRabbitMQDispatcher\ForecastsRabbitMQDispatcher.csproj"/>
+        <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj"/>
+    </ItemGroup>
+    <ItemGroup>
+        <PackageReference Include="Config.Net" Version="5.1.5"/>
+    </ItemGroup>
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net7.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <RootNamespace>ForecastsServiceApp</RootNamespace>
+    </PropertyGroup>
+    <ItemGroup>
+        <Content Include="forecaster.ini">
+            <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+        </Content>
+    </ItemGroup>
 </Project>

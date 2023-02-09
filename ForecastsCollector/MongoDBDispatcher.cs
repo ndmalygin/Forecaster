@@ -1,42 +1,48 @@
-using System;
 using ForecastsCommon.JsonEntities;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
+using NLog;
 
-namespace ForecastsCollector
+namespace ForecastsCollector;
+
+public class MongoDBDispatcher
 {
-    public class MongoDBDispatcher
+    private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
+    private readonly MongoClient _client;
+    private readonly string _connectionString;
+    private readonly string _dbName;
+
+    public MongoDBDispatcher(string connectionString)
     {
-        private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
-        private readonly string _connectionString;
-        private readonly string _dbName;
-        private readonly MongoClient _client;
+        _connectionString = connectionString;
+        _dbName = "forecaster";
+        _client = new MongoClient(_connectionString);
+    }
 
-        public MongoDBDispatcher(string connectionString)
+    public void WriteWeatherData(string city, string weatherData)
+    {
+        try
         {
-            _connectionString = connectionString;
-            _dbName = "forecaster";
-            _client = new MongoClient(_connectionString);
+            var document = BsonSerializer.Deserialize<BsonDocument>(weatherData);
+            var collection = _client.GetDatabase(_dbName).GetCollection<BsonDocument>(city);
+            collection.InsertOneAsync(document);
         }
-
-        public void WriteWeatherData(string city, string weatherData)
+        catch (Exception e)
         {
-            try
-            {
-                var document = BsonSerializer.Deserialize<BsonDocument>(weatherData);
-                var collection = _client.GetDatabase(_dbName).GetCollection<BsonDocument>(city);
-                collection.InsertOneAsync(document);
-            }
-            catch (Exception e)
-            {
-                Logger.Error(e);
-                throw;
-            }
+            Logger.Error(e);
+            throw;
         }
+    }
 
-        public IQueryable<Weather> GetWeathers(string city) => _client.GetDatabase(_dbName).GetCollection<Weather>(city).AsQueryable().GroupBy(v => v.date, g => g).Select(v => v.First()).OrderBy(d => d.date);
+    public IQueryable<Weather> GetWeathers(string city)
+    {
+        return _client.GetDatabase(_dbName).GetCollection<Weather>(city).AsQueryable().GroupBy(v => v.date, g => g)
+            .Select(v => v.First()).OrderBy(d => d.date);
+    }
 
-        public IEnumerable<string> GetCities() => _client.GetDatabase(_dbName).ListCollectionNames().ToEnumerable();
+    public IEnumerable<string> GetCities()
+    {
+        return _client.GetDatabase(_dbName).ListCollectionNames().ToEnumerable();
     }
 }

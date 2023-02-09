@@ -10,13 +10,15 @@
 
 @if (templates == null)
 {
-    <p><em>Loading...</em></p>
+    <p>
+        <em>Loading...</em>
+    </p>
 }
 else
 {
     <p>
-    <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
-        @foreach (var template in templates)
+        <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
+            @foreach (var template in templates)
             {
                 <option value=@template>@template</option>
             }
@@ -24,7 +26,7 @@ else
     </p>
 
     <table class="table">
-    <thead>
+        <thead>
         <tr>
             <th>Date</th>
             <th>Temperature (C)</th>
@@ -32,18 +34,18 @@ else
             <th>Humidity (%)</th>
             <th>Wind (m/s)</th>
         </tr>
-    </thead>
-    <tbody>
+        </thead>
+        <tbody>
         @foreach (var forecast in forecasts)
-            {
-                <tr>
-                    <td>@forecast.Date</td>
-                    <td>@forecast.Main.Temperature</td>
-                    <td>@forecast.Main.Pressure</td>
-                    <td>@forecast.Main.Humidity</td>
-                    <td>@forecast.Wind.Speed</td>
-                </tr>
-            }
+        {
+            <tr>
+                <td>@forecast.Date</td>
+                <td>@forecast.Main.Temperature</td>
+                <td>@forecast.Main.Pressure</td>
+                <td>@forecast.Main.Humidity</td>
+                <td>@forecast.Wind.Speed</td>
+            </tr>
+        }
         </tbody>
     </table>
 }
@@ -51,15 +53,17 @@ else
 @code {
     private ForecastsCommon.JsonEntities.Weather[] forecasts = new ForecastsCommon.JsonEntities.Weather[0];
     private string selectedCity = string.Empty;
-    private string[] templates = new string[] { "Select city" };
+    private string[] templates = { "Select city" };
 
     private async void SelectedCityChanged(ChangeEventArgs e)
     {
         selectedCity = e.Value?.ToString() ?? templates[0];
         forecasts = await ForecastService.GetForecastAsync(selectedCity);
     }
+
     protected override async Task OnInitializedAsync()
     {
         templates = templates.Union(await ForecastService.GetCitiesNamesAsync()).ToArray();
     }
+
 }

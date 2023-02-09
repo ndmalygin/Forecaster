@@ -1,7 +1,7 @@
 @page "/graphdata"
-@using ChartJs.Blazor.Util
-@using ChartJs.Blazor.LineChart
 @using ForecastsWebApp.Data
+@using ChartJs.Blazor.LineChart
+@using ChartJs.Blazor.Util
 @inject WeatherForecastService ForecastService
 
 <PageTitle>Weather graph data</PageTitle>
@@ -12,13 +12,15 @@
 
 @if (_temperature == null)
 {
-    <p><em>Loading...</em></p>
+    <p>
+        <em>Loading...</em>
+    </p>
 }
 else
 {
     <p>
-    <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
-        @foreach (var template in templates)
+        <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
+            @foreach (var template in templates)
             {
                 <option value=@template>@template</option>
             }
@@ -31,13 +33,13 @@ else
 }
 
 @code {
-    private LineConfig _temperature = new LineConfig();
-    private LineConfig _pressure = new LineConfig();
-    private LineConfig _humidity = new LineConfig();
-    private LineConfig _speed = new LineConfig();
+    private readonly LineConfig _temperature = new();
+    private readonly LineConfig _pressure = new();
+    private readonly LineConfig _humidity = new();
+    private readonly LineConfig _speed = new();
 
     private string selectedCity = string.Empty;
-    private string[] templates = new string[] { "Select city" };
+    private string[] templates = { "Select city" };
 
     private async void SelectedCityChanged(ChangeEventArgs e)
     {
@@ -63,29 +65,29 @@ else
         }
 
         var temperature = forecastsArr.Select(v => v.Main.Temperature);
-        LineDataset<double> datasetT = new LineDataset<double>(temperature)
-            {
-                BackgroundColor = ColorUtil.ColorHexString(255, 99, 132),
-                Label = "Temperature (C)"
-            };
+        var datasetT = new LineDataset<double>(temperature)
+        {
+            BackgroundColor = ColorUtil.ColorHexString(255, 99, 132),
+            Label = "Temperature (C)"
+        };
         var pressure = forecastsArr.Select(v => v.Main.Pressure);
-        LineDataset<double> datasetP = new LineDataset<double>(pressure)
-            {
-                BackgroundColor = ColorUtil.ColorHexString(75, 192, 192),
-                Label = "Pressure (hPa)"
-            };
+        var datasetP = new LineDataset<double>(pressure)
+        {
+            BackgroundColor = ColorUtil.ColorHexString(75, 192, 192),
+            Label = "Pressure (hPa)"
+        };
         var humidity = forecastsArr.Select(v => v.Main.Humidity);
-        LineDataset<double> datasetH = new LineDataset<double>(humidity)
-            {
-                BackgroundColor = ColorUtil.ColorHexString(54, 162, 235),
-                Label = "Humidity (%)"
-            };
+        var datasetH = new LineDataset<double>(humidity)
+        {
+            BackgroundColor = ColorUtil.ColorHexString(54, 162, 235),
+            Label = "Humidity (%)"
+        };
         var speed = forecastsArr.Select(v => v.Wind.Speed);
-        LineDataset<double> datasetS = new LineDataset<double>(speed)
-            {
-                BackgroundColor = ColorUtil.ColorHexString(255, 205, 86),
-                Label = "Wind (m/s)"
-            };
+        var datasetS = new LineDataset<double>(speed)
+        {
+            BackgroundColor = ColorUtil.ColorHexString(255, 205, 86),
+            Label = "Wind (m/s)"
+        };
 
         _temperature.Data.Datasets.Add(datasetT);
         _pressure.Data.Datasets.Add(datasetP);
@@ -97,4 +99,5 @@ else
     {
         templates = templates.Union(await ForecastService.GetCitiesNamesAsync()).ToArray();
     }
+
 }

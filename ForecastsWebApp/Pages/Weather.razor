@@ -1,7 +1,7 @@
 ﻿@page "/weather"
-@using ForecastsCommon;
-@using ForecastsRabbitMQDispatcher;
-@using Config.Net;
+@using Config.Net
+@using ForecastsCommon
+@using ForecastsRabbitMQDispatcher
 <PageTitle>Current weather</PageTitle>
 
 <h1>Current weather</h1>
@@ -13,24 +13,22 @@
 @code {
     private string _currentWeather = string.Empty;
 
-    protected override void OnInitialized() 
-    {   
+    protected override void OnInitialized()
+    {
         var settings = new ConfigurationBuilder<ISettings>()
-           .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"forecaster.ini"))
-        .Build();
-        
+            .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "forecaster.ini"))
+            .Build();
+
         var weatherExtractor = new WeatherExtractor();
         var rabbitMQDispatcher = new RabbitMQDispatcher(settings.rabbitmq_connection);
-        rabbitMQDispatcher.Received += (_, message) => 
-        { 
+        rabbitMQDispatcher.Received += (_, message) =>
+        {
             var weather = weatherExtractor.ExtractMandatoryDataObject(message);
             _currentWeather = $"Weather in {weather.City} is: temperature {weather.Main.Temperature}C, pressure {weather.Main.Pressure}hPa, wind {weather.Wind.Speed}meter/sec, humidity {weather.Main.Humidity}%";
-             InvokeAsync(() =>
-                {
-                    StateHasChanged();
-                });
+            InvokeAsync(() => { StateHasChanged(); });
         };
 
         rabbitMQDispatcher.ConsumeMessage();
     }
+
 }

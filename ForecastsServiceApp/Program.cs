@@ -4,8 +4,8 @@ using ForecastsCommon;
 using ForecastsRabbitMQDispatcher;
 
 var settings = new ConfigurationBuilder<ISettings>()
-   .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"forecaster.ini"))
-   .Build();
+    .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "forecaster.ini"))
+    .Build();
 
 var cities = settings.cities;
 

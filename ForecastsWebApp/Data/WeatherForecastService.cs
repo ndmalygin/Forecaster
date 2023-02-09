@@ -1,17 +1,19 @@
 using Config.Net;
-using ForecastsCommon.JsonEntities;
 using ForecastsCollector;
 using ForecastsCommon;
+using ForecastsCommon.JsonEntities;
 
 namespace ForecastsWebApp.Data;
+
 public class WeatherForecastService
 {
     private readonly string _mongoUri;
+
     public WeatherForecastService()
     {
         var settings = new ConfigurationBuilder<ISettings>()
-           .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "forecaster.ini"))
-           .Build();
+            .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "forecaster.ini"))
+            .Build();
 
         _mongoUri = settings.mongodb_connection;
     }

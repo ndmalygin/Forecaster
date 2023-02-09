@@ -1,8 +1,7 @@
-namespace ForecastsCollector.JsonEntities
+namespace ForecastsCollector.JsonEntities;
+
+public class GeoCodes
 {
-    public class GeoCodes
-    {
-        public double lat { get; set; }
-        public double lon { get; set; }
-    }
+    public double lat { get; set; }
+    public double lon { get; set; }
 }
