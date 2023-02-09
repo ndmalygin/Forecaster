@@ -26,6 +26,9 @@ public class Weather
 
     public override bool Equals(object? obj)
     {
+        if (!(obj is Weather))
+            return false;
+
         return Main.Equals(((Weather)obj).Main) && Wind.Equals(((Weather)obj).Wind);
     }
 }
