@@ -10,9 +10,9 @@
             "request": "launch",
             "preLaunchTask": "build",
             // If you have changed target frameworks, make sure to update the program path.
-            "program": "${workspaceFolder}/ForecastsConsole/bin/Debug/net7.0/ForecastsConsole.dll",
+            "program": "${workspaceFolder}/ForecastsServiceApp/bin/Debug/net7.0/ForecastsServiceApp.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/ForecastsConsole",
+            "cwd": "${workspaceFolder}/ForecastsServiceApp",
             // For more information about the 'console' field, see https://aka.ms/VSCode-CS-LaunchJson-Console
             "console": "internalConsole",
             "stopAtEntry": false
