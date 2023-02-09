@@ -5,8 +5,9 @@ docker run -d -p 27017:27017 --name forecaster-mongodb mongo:latest
 docker pull rabbitmq:3-management
 docker run --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3-management
 
-Correct forecaster.ini files (ForecastsConsole,ForecastsBlazor folders) to your connections 
+Correct forecaster.ini files (in ForecastsConsole,ForecastsBlazor folders) to your connections 
 (mongodb://ip:port for MongoDB container, ip for RabbitMQ container) and startup settings.
+Please note that you need free access token to https://openweathermap.org/ to work with app.
 To check container's ip, run in console: 
 	docker ps
 	docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' YOUR_CONTAINER_ID
