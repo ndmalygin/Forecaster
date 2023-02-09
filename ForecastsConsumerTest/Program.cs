@@ -1,4 +1,5 @@
 ﻿using Config.Net;
+using ForecastsCommon;
 using ForecastsRabbitMQDispatcher;
 
 var settings = new ConfigurationBuilder<ISettings>()

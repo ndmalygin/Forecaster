@@ -1,3 +1,5 @@
+namespace ForecastsCommon;
+
 public interface ISettings
 {
     string mongodb_connection { get; set; }

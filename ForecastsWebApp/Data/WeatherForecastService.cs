@@ -1,6 +1,8 @@
 using Config.Net;
 using ForecastsCommon.JsonEntities;
 using ForecastsCollector;
+using ForecastsCommon;
+
 namespace ForecastsWebApp.Data;
 public class WeatherForecastService
 {
