@@ -1,7 +1,7 @@
 using Config.Net;
 using ForecastsCommon.JsonEntities;
 using ForecastsCollector;
-namespace ForecastsBlazor.Data;
+namespace ForecastsWebApp.Data;
 public class WeatherForecastService
 {
     private readonly string _mongoUri;

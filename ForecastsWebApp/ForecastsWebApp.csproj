@@ -3,18 +3,19 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>ForecastsWebApp</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Config.Net" Version="5.1.5" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ForecastsCollector\ForecastsCollector.csproj"/>
-    <ProjectReference Include="..\ForecastsRabbitMQProcessor\ForecastsRabbitMQProcessor.csproj"/>
-    <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj"/>
+    <ProjectReference Include="..\ForecastsCollector\ForecastsCollector.csproj" />
+    <ProjectReference Include="..\ForecastsRabbitMQDispatcher\ForecastsRabbitMQDispatcher.csproj" />
+    <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="ChartJs.Blazor" Version="1.1.0"/>
-    <PackageReference Include="ChartJs.Blazor.Fork" Version="2.0.2"/>
+    <PackageReference Include="ChartJs.Blazor" Version="1.1.0" />
+    <PackageReference Include="ChartJs.Blazor.Fork" Version="2.0.2" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="forecaster.ini">
