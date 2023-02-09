@@ -6,4 +6,9 @@ namespace ForecastsCommon.JsonEntities;
 public class Wind
 {
     [BsonElement("speed")] public double Speed { get; set; }
+
+    public override bool Equals(object? obj)
+    {
+        return Speed == ((Wind)obj).Speed;
+    }
 }

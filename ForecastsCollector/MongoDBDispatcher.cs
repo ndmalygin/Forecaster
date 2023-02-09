@@ -35,8 +35,23 @@ public class MongoDBDispatcher
         }
     }
 
-    public IQueryable<Weather> GetWeathers(string city)
+    public IQueryable<Weather> GetWeathers(string city, bool all = true)
     {
+        if (!all)
+        {
+            var data = _client.GetDatabase(_dbName).GetCollection<Weather>(city).AsQueryable().GroupBy(v => v.date, g => g)
+                .Select(v => v.First()).OrderBy(d => d.date).ToArray();
+
+            var prepared = new List<Weather>();
+            for (var i = 1; i < data.Length; i++)
+            {
+                if (!data[i].Equals(data[i-1]))
+                    prepared.Add(data[i]);
+            }
+
+            return prepared.AsQueryable();
+        }
+
         return _client.GetDatabase(_dbName).GetCollection<Weather>(city).AsQueryable().GroupBy(v => v.date, g => g)
             .Select(v => v.First()).OrderBy(d => d.date);
     }

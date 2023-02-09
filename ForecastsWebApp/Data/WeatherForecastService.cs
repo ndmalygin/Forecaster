@@ -27,13 +27,13 @@ public class WeatherForecastService
         switch (periodEnum)
         {
             case Periods.Day:
-                return Task.FromResult(mongoDBDispatcher.GetWeathers(city).AsEnumerable().Where(v => v.Date > DateTime.Now.AddDays(-1)).ToArray());
+                return Task.FromResult(mongoDBDispatcher.GetWeathers(city, allValuesMode).AsEnumerable().Where(v => v.Date > DateTime.Now.AddDays(-1)).ToArray());
             case Periods.Week:
-                return Task.FromResult(mongoDBDispatcher.GetWeathers(city).AsEnumerable().Where(v => v.Date > DateTime.Now.AddDays(-7)).ToArray());
+                return Task.FromResult(mongoDBDispatcher.GetWeathers(city, allValuesMode).AsEnumerable().Where(v => v.Date > DateTime.Now.AddDays(-7)).ToArray());
             case Periods.Month:
-                return Task.FromResult(mongoDBDispatcher.GetWeathers(city).AsEnumerable().Where(v => v.Date > DateTime.Now.AddDays(-30)).ToArray());
+                return Task.FromResult(mongoDBDispatcher.GetWeathers(city, allValuesMode).AsEnumerable().Where(v => v.Date > DateTime.Now.AddDays(-30)).ToArray());
             default:
-                return Task.FromResult(mongoDBDispatcher.GetWeathers(city).ToArray());
+                return Task.FromResult(mongoDBDispatcher.GetWeathers(city, allValuesMode).ToArray());
         }
     }
 

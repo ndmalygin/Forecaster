@@ -23,4 +23,9 @@ public class Weather
         DateTime dateTime = new(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
         return dateTime.AddSeconds(unixTimeStamp).ToLocalTime();
     }
+
+    public override bool Equals(object? obj)
+    {
+        return Main.Equals(((Weather)obj).Main) && Wind.Equals(((Weather)obj).Wind);
+    }
 }
