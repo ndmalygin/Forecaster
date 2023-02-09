@@ -30,13 +30,13 @@ public class Weather
     public ObjectId Id { get; set; }
 
     [BsonElement("main")]
-    public Main Main { get; set; }
+    public Main? Main { get; set; }
 
     [BsonElement("wind")]
-    public Wind Wind { get; set; }
+    public Wind? Wind { get; set; }
 
     [BsonElement("name")]
-    public string City { get; set; }
+    public string? City { get; set; }
 
     [BsonElement("dt")]
     public int date { get; set; }

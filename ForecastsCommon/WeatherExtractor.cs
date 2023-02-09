@@ -12,22 +12,22 @@ public class WeatherExtractor
         {
             Main = new Main
             {
-                Temperature = obj.main.temp,
-                Humidity = obj.main.humidity,
-                Pressure = obj.main.pressure,
+                Temperature = obj?.main.temp,
+                Humidity = obj?.main.humidity,
+                Pressure = obj?.main.pressure,
             },
             Wind = new Wind
             {
-                Speed = obj.wind.speed
+                Speed = obj?.wind.speed
             },
-            City = obj.name,
-            date = obj.dt
+            City = obj?.name,
+            date = obj?.dt
         };
 
         return JsonConvert.SerializeObject(weather);
     }
 
-    public Weather ExtractMandatoryDataObject(string json)
+    public Weather? ExtractMandatoryDataObject(string json)
     {
         return JsonConvert.DeserializeObject<Weather>(json);
     }
