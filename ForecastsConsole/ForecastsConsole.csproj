@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <ItemGroup>
     <ProjectReference Include="..\ForecastsCollector\ForecastsCollector.csproj" />
-    <ProjectReference Include="..\ForecastsRabbitMQProcessor\ForecastsRabbitMQProcessor.csproj" />
+    <ProjectReference Include="..\ForecastsRabbitMQDispatcher\ForecastsRabbitMQDispatcher.csproj" />
     <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj" />
   </ItemGroup>
   <ItemGroup>

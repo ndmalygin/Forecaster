@@ -3,9 +3,10 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RootNamespace>ForecastsRabbitMQDispatcher</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="RabbitMQ.Client" Version="6.4.0"/>
+    <PackageReference Include="RabbitMQ.Client" Version="6.4.0" />
     <PackageReference Include="NLog" Version="5.1.1" />
     <PackageReference Include="NLog.Mongo" Version="4.6.0.217" />
   </ItemGroup>

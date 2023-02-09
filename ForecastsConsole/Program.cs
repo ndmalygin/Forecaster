@@ -1,7 +1,7 @@
 ﻿using Config.Net;
 using ForecastsCollector;
 using ForecastsCommon;
-using ForecastsRabbitMQProcessor;
+using ForecastsRabbitMQDispatcher;
 
 var settings = new ConfigurationBuilder<ISettings>()
    .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory,"forecaster.ini"))

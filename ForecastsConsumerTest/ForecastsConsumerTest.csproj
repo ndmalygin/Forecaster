@@ -4,12 +4,13 @@
     <TargetFramework>net7.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <RootNamespace>ForecastsConsumerTest</RootNamespace>
   </PropertyGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ForecastsRabbitMQProcessor\ForecastsRabbitMQProcessor.csproj"/>
+    <ProjectReference Include="..\ForecastsRabbitMQDispatcher\ForecastsRabbitMQDispatcher.csproj" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Config.Net" Version="5.1.5"/>
+    <PackageReference Include="Config.Net" Version="5.1.5" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj" />

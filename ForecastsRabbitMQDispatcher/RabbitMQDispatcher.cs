@@ -2,7 +2,7 @@
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 
-namespace ForecastsRabbitMQProcessor
+namespace ForecastsRabbitMQDispatcher
 {
     public class RabbitMQDispatcher : IDisposable
     {
