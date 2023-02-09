@@ -9,7 +9,7 @@ namespace ForecastsRabbitMQProcessor
         private static readonly NLog.Logger Logger = NLog.LogManager.GetCurrentClassLogger();
         private readonly string _rabbitUri;
         private readonly IModel _channel;
-        public EventHandler<string> Received;
+        public EventHandler<string>? Received;
 
         public RabbitMQDispatcher(string rabbitUri)
         {
