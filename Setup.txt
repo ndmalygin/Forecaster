@@ -1,4 +1,4 @@
-Setup instructions:
+Setup instructions for docker:
 
 docker pull mongo:4.0.4
 docker run -d -p 27017:27017 --name forecaster-mongodb mongo:latest
@@ -12,9 +12,9 @@ To check container's ip, run in console:
 	docker ps
 	docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' YOUR_CONTAINER_ID
 
-docker build -f ./Dockerfile.collector -t dotnetcoreconsole .
-docker run dotnetcoreconsole:latest /bin/bash
-docker build -t dotnetcoreapp .
-docker run -p 8080:5000 -it dotnetcoreapp:latest
+docker build -f ./Dockerfile.forecasterservice -t forecasterservice .
+docker run forecasterservice:latest /bin/bash
+docker build -f ./Dockerfile.forecasterwebapp -t forecasterwebapp .
+docker run -p 8080:5000 -it forecasterwebapp:latest
 
 Open http://localhost:8080 in your browser.
