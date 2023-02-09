@@ -1,0 +1,19 @@
+Setup instructions:
+
+docker pull mongo:4.0.4
+docker run -d -p 27017:27017 --name forecaster-mongodb mongo:latest
+docker pull rabbitmq:3-management
+docker run --rm -it -p 15672:15672 -p 5672:5672 rabbitmq:3-management
+
+Correct forecaster.ini files (ForecastsConsole,ForecastsBlazor folders) to your connections 
+(mongodb://ip:port for MongoDB container, ip for RabbitMQ container) and startup settings.
+To check container's ip, run in console: 
+	docker ps
+	docker inspect -f '{{range.NetworkSettings.Networks}}{{.IPAddress}}{{end}}' YOUR_CONTAINER_ID
+
+docker build -f ./Dockerfile.collector -t dotnetcoreconsole .
+docker run dotnetcoreconsole:latest
+docker build -t dotnetcoreapp .
+docker run -p 8080:5000 -it dotnetcoreapp:latest
+
+Open http://localhost:8080 in your browser.
