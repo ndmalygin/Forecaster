@@ -18,15 +18,29 @@
 }
 else
 {
-    <p>
-    <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
-        @foreach (var template in templates)
-            {
-                <option value=@template>@template</option>
-            }
-        </select>
-    </p>
-    <div>
+    <table class="form-control" cellpadding="5" style="border:0">
+        <tr style="height:50px">
+            <td style="width:150px">
+                <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
+                    @foreach (var template in cityTemplates)
+                        {
+                            <option value=@template>@template</option>
+                        }
+                    </select>
+                </td>
+                <td style="width:150px" >
+                    <select class="form-control" style="width:150px" @onchange=SelectedPeriodChanged>
+                        @foreach (var template in periodTemplates)
+                        {
+                            <option value=@template>@template</option>
+                        }
+                    </select>
+                </td>
+                <td style="width:150px">
+                        <button class="form-control" @onclick="Toggle">@Caption</button>
+                </td>
+            </tr>
+        </table>
         <table class="form-control" style="width:100%">
             <tr style="height:50%">
                 <td style="width:25%">
@@ -45,7 +59,6 @@ else
                 </td>
             </tr>
         </table>
-    </div>
 }
 
 @code {
@@ -55,19 +68,25 @@ else
     private readonly LineConfig _speed = new();
 
     private string selectedCity = string.Empty;
-    private string[] templates = { "Select city" };
-
-    private string Caption => isMoving ? "Start Spinning" : "Stop Spinning";
+    private string[] cityTemplates = { "Select city" };
+    private string[] periodTemplates = { "Select period", "Day", "Week", "Month", "All" };
+    private string Caption => isMoving ? "All values" : "Distinct values";
     private bool isMoving = true;
 
     private void Toggle()
     {
         isMoving = !isMoving;
+
+        //todo
     }
 
+    private async void SelectedPeriodChanged(ChangeEventArgs e)
+    {
+        //todo
+    }
     private async void SelectedCityChanged(ChangeEventArgs e)
     {
-        selectedCity = e.Value?.ToString() ?? templates[0];
+        selectedCity = e.Value?.ToString() ?? cityTemplates[0];
 
         _temperature.Data.Labels.Clear();
         _temperature.Data.Datasets.Clear();
@@ -121,7 +140,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        templates = templates.Union(await ForecastService.GetCitiesNamesAsync()).ToArray();
+        cityTemplates = cityTemplates.Union(await ForecastService.GetCitiesNamesAsync()).ToArray();
     }
 
 }
