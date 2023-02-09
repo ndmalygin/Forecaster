@@ -1,25 +1,25 @@
 FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
 WORKDIR /src
 COPY Forecaster.sln ./
-COPY ForecastsBlazor/*.csproj ./ForecastsBlazor/
+COPY ForecastsWebApp/*.csproj ./ForecastsWebApp/
 COPY ForecastsCollector/*.csproj ./ForecastsCollector/
-COPY ForecastsRabbitMQProcessor/*.csproj ./ForecastsRabbitMQProcessor/
+COPY ForecastsRabbitMQDispatcher/*.csproj ./ForecastsRabbitMQDispatcher/
 COPY ForecastsCommon/*.csproj ./ForecastsCommon/
-COPY ForecastsConsole/*.csproj ./ForecastsConsole/
-COPY ForecastsConsumerConsole/*.csproj ./ForecastsConsumerConsole/
+COPY ForecastsServiceApp/*.csproj ./ForecastsServiceApp/
+COPY ForecastsConsumerTest/*.csproj ./ForecastsConsumerTest/
 
 RUN dotnet restore
 COPY . .
 WORKDIR /src/ForecastsCommon
 RUN dotnet build -c Release -o /app
 
-WORKDIR /src/ForecastsRabbitMQProcessor
+WORKDIR /src/ForecastsRabbitMQDispatcher
 RUN dotnet build -c Release -o /app
 
 WORKDIR /src/ForecastsCollector
 RUN dotnet build -c Release -o /app
 
-WORKDIR /src/ForecastsConsole
+WORKDIR /src/ForecastsServiceApp
 RUN dotnet build -c Release -o /app
 
 FROM build AS publish
@@ -28,4 +28,4 @@ RUN dotnet publish -c Release -o /app
 WORKDIR /app
 COPY --from=build /app .
 
-ENTRYPOINT ["dotnet", "ForecastsConsole.dll"]
+ENTRYPOINT ["dotnet", "ForecastsServiceApp.dll"]
