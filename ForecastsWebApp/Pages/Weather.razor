@@ -2,33 +2,68 @@
 @using Config.Net
 @using ForecastsCommon
 @using ForecastsRabbitMQDispatcher
+@using System.Collections.Concurrent;
 <PageTitle>Current weather</PageTitle>
 
 <h1>Current weather</h1>
 
 <p>This component demonstrates fetching current weather data from RabbitMQ.</p>
 
-<p role="status">@_currentWeather</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>City</th>
+            <th>Date</th>
+            <th>Temperature (C)</th>
+            <th>Pressure (hPa)</th>
+            <th>Humidity (%)</th>
+            <th>Wind (m/s)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var forecast in forecasts.Values)
+        {
+            <tr>
+                <td>@forecast.City</td>
+                <td>@forecast.Date</td>
+                <td>@forecast.Main.Temperature</td>
+                <td>@forecast.Main.Pressure</td>
+                <td>@forecast.Main.Humidity</td>
+                <td>@forecast.Wind.Speed</td>
+            </tr>
+        }
+    </tbody>
+</table>
 
 @code {
-    private string _currentWeather = string.Empty;
-
+    private ConcurrentDictionary<string, ForecastsCommon.JsonEntities.Weather> forecasts = new ConcurrentDictionary<string,
+    ForecastsCommon.JsonEntities.Weather>();
+    object sync = new object();
     protected override void OnInitialized()
     {
         var settings = new ConfigurationBuilder<ISettings>()
-            .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "forecaster.ini"))
-            .Build();
+        .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "forecaster.ini"))
+        .Build();
 
         var weatherExtractor = new WeatherExtractor();
         var rabbitMQDispatcher = new RabbitMQDispatcher(settings.rabbitmq_connection);
         rabbitMQDispatcher.Received += (_, message) =>
         {
-            var weather = weatherExtractor.ExtractMandatoryDataObject(message);
-            _currentWeather = $"Weather in {weather.City} is: temperature {weather.Main.Temperature}C, pressure {weather.Main.Pressure}hPa, wind {weather.Wind.Speed}meter/sec, humidity {weather.Main.Humidity}%";
+            try
+            {
+                var weather = weatherExtractor.ExtractMandatoryDataObject(message);
+                forecasts[weather.City] = weather;
+
+            }
+            catch (System.Exception e)
+            {
+                Console.WriteLine(e.Message);
+                throw;
+            }
+
             InvokeAsync(() => { StateHasChanged(); });
         };
 
         rabbitMQDispatcher.ConsumeMessage();
     }
-
 }
