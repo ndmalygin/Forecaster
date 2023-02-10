@@ -18,9 +18,9 @@
 }
 else
 {
-    <table class="form-control" cellpadding="5" style="border:0">
-    <tr style="height:50px">
-        <td style="width:150px">
+    <table class="form-control" style="border:0">
+    <tr style="height:50px; padding-bottom:10px">
+        <td style="width:150px; padding-left:5px; padding-bottom:15px">
             <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
                 @foreach (var template in cityTemplates)
                     {
@@ -28,7 +28,7 @@ else
                     }
                 </select>
             </td>
-            <td style="width:150px">
+            <td style="width:150px; padding-left:5px; padding-bottom:15px">
                 <select class="form-control" style="width:150px" @onchange=SelectedPeriodChanged>
                     @foreach (var template in periodTemplates)
                     {
@@ -36,29 +36,27 @@ else
                     }
                 </select>
             </td>
-            <td style="width:150px">
+            <td style="width:150px; padding-left:5px; padding-bottom:15px">
                 <button class="form-control" @onclick="Toggle">@Caption</button>
             </td>
         </tr>
     </table>
-    <table class="form-control" style="width:100%">
-        <tr style="height:50%">
-            <td style="width:25%">
-                <Chart Config="_temperature"></Chart>
-            </td>
-            <td style="width:25%">
-                <Chart Config="_pressure"></Chart>
-            </td>
-        </tr>
-        <tr style="height:50%">
-            <td style="width:25%">
-                <Chart Config="_humidity"></Chart>
-            </td>
-            <td style="width:25%">
-                <Chart Config="_speed"></Chart>
-            </td>
-        </tr>
-    </table>
+    <div class="form-control" style="border: 0; display:flex;  justify-content: center;  padding: 3px;">
+        <div class="form-control">
+            <Chart Config="_temperature"></Chart>
+        </div>
+        <div class="form-control">
+            <Chart Config="_pressure"></Chart>
+        </div>
+    </div>
+    <div class="form-control" style="border: 0; display:flex;  justify-content: center;  padding: 3px;">
+        <div class="form-control">
+            <Chart Config="_humidity"></Chart>
+        </div>
+        <div class="form-control">
+            <Chart Config="_speed"></Chart>
+        </div>
+    </div>
 }
 
 @code {
