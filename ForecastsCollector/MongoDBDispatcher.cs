@@ -45,7 +45,9 @@ public class MongoDBDispatcher
             var prepared = new List<Weather>();
             for (var i = 1; i < data.Length; i++)
             {
-                if (!data[i].Equals(data[i-1]))
+                if (i == 1)
+                    prepared.Add(data[0]);
+                if (!data[i].Equals(data[i - 1]))
                     prepared.Add(data[i]);
             }
 
