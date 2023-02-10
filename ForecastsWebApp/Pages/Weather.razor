@@ -6,7 +6,6 @@
 <PageTitle>Current weather</PageTitle>
 
 <h1>Current weather</h1>
-
 <p>This component demonstrates fetching current weather data from RabbitMQ.</p>
 
 <table class="table">
@@ -36,14 +35,12 @@
 </table>
 
 @code {
-    private ConcurrentDictionary<string, ForecastsCommon.JsonEntities.Weather> forecasts = new ConcurrentDictionary<string,
-    ForecastsCommon.JsonEntities.Weather>();
-    object sync = new object();
+    private ConcurrentDictionary<string, ForecastsCommon.JsonEntities.Weather> forecasts = new ConcurrentDictionary<string, ForecastsCommon.JsonEntities.Weather>();
     protected override void OnInitialized()
     {
         var settings = new ConfigurationBuilder<ISettings>()
-        .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "forecaster.ini"))
-        .Build();
+            .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "forecaster.ini"))
+            .Build();
 
         var weatherExtractor = new WeatherExtractor();
         var rabbitMQDispatcher = new RabbitMQDispatcher(settings.rabbitmq_connection);
@@ -53,7 +50,6 @@
             {
                 var weather = weatherExtractor.ExtractMandatoryDataObject(message);
                 forecasts[weather.City] = weather;
-
             }
             catch (System.Exception e)
             {
