@@ -14,7 +14,7 @@ To check container's ip, run in console:
 
 docker build -f ./Dockerfile.forecasterservice -t forecasterservice .
 docker run forecasterservice:latest /bin/bash
-docker build -f ./Dockerfile.forecasterwebapp -t forecasterweb .
+docker build -f ./Dockerfile.forecasterweb -t forecasterweb .
 docker run -p 8080:5000 -it forecasterweb:latest
 
 Open http://localhost:8080 in your browser.
