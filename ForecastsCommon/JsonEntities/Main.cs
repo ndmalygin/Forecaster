@@ -13,6 +13,7 @@ public class Main
 
     public override bool Equals(object? obj)
     {
-        return Temperature == ((Main)obj).Temperature && Pressure == ((Main)obj).Pressure && Humidity == ((Main)obj).Humidity;
+        return Temperature == ((Main)obj).Temperature && Pressure == ((Main)obj).Pressure &&
+               Humidity == ((Main)obj).Humidity;
     }
 }

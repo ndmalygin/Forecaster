@@ -39,7 +39,8 @@ public class MongoDBDispatcher
     {
         if (!all)
         {
-            var data = _client.GetDatabase(_dbName).GetCollection<Weather>(city).AsQueryable().GroupBy(v => v.date, g => g)
+            var data = _client.GetDatabase(_dbName).GetCollection<Weather>(city).AsQueryable()
+                .GroupBy(v => v.date, g => g)
                 .Select(v => v.First()).OrderBy(d => d.date).ToArray();
 
             var prepared = new List<Weather>();

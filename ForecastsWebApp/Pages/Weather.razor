@@ -2,7 +2,7 @@
 @using Config.Net
 @using ForecastsCommon
 @using ForecastsRabbitMQDispatcher
-@using System.Collections.Concurrent;
+@using System.Collections.Concurrent
 <PageTitle>Current weather</PageTitle>
 
 <h1>Current weather</h1>
@@ -10,32 +10,33 @@
 
 <table class="table">
     <thead>
-        <tr>
-            <th>City</th>
-            <th>Date</th>
-            <th>Temperature (C)</th>
-            <th>Pressure (hPa)</th>
-            <th>Humidity (%)</th>
-            <th>Wind (m/s)</th>
-        </tr>
+    <tr>
+        <th>City</th>
+        <th>Date</th>
+        <th>Temperature (C)</th>
+        <th>Pressure (hPa)</th>
+        <th>Humidity (%)</th>
+        <th>Wind (m/s)</th>
+    </tr>
     </thead>
     <tbody>
-        @foreach (var forecast in forecasts.Values)
-        {
-            <tr>
-                <td>@forecast.City</td>
-                <td>@forecast.Date</td>
-                <td>@forecast.Main.Temperature</td>
-                <td>@forecast.Main.Pressure</td>
-                <td>@forecast.Main.Humidity</td>
-                <td>@forecast.Wind.Speed</td>
-            </tr>
-        }
+    @foreach (var forecast in forecasts.Values)
+    {
+        <tr>
+            <td>@forecast.City</td>
+            <td>@forecast.Date</td>
+            <td>@forecast.Main.Temperature</td>
+            <td>@forecast.Main.Pressure</td>
+            <td>@forecast.Main.Humidity</td>
+            <td>@forecast.Wind.Speed</td>
+        </tr>
+    }
     </tbody>
 </table>
 
 @code {
-    private ConcurrentDictionary<string, ForecastsCommon.JsonEntities.Weather> forecasts = new ConcurrentDictionary<string, ForecastsCommon.JsonEntities.Weather>();
+    private readonly ConcurrentDictionary<string, ForecastsCommon.JsonEntities.Weather> forecasts = new();
+
     protected override void OnInitialized()
     {
         var settings = new ConfigurationBuilder<ISettings>()
@@ -51,7 +52,7 @@
                 var weather = weatherExtractor.ExtractMandatoryDataObject(message);
                 forecasts[weather.City] = weather;
             }
-            catch (System.Exception e)
+            catch (Exception e)
             {
                 Console.WriteLine(e.Message);
                 throw;
@@ -62,4 +63,5 @@
 
         rabbitMQDispatcher.ConsumeMessage();
     }
+
 }

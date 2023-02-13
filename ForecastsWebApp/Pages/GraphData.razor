@@ -13,16 +13,16 @@
 @if (_temperature == null)
 {
     <p>
-    <em>Loading...</em>
-</p>
+        <em>Loading...</em>
+    </p>
 }
 else
 {
     <table class="form-control" style="border:0">
-    <tr style="height:50px; padding-bottom:10px">
-        <td style="width:150px; padding-left:5px; padding-bottom:15px">
-            <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
-                @foreach (var template in cityTemplates)
+        <tr style="height:50px; padding-bottom:10px">
+            <td style="width:150px; padding-left:5px; padding-bottom:15px">
+                <select class="form-control" style="width:150px" @onchange=SelectedCityChanged>
+                    @foreach (var template in cityTemplates)
                     {
                         <option value=@template>@template</option>
                     }
@@ -68,7 +68,7 @@ else
     private string selectedCity = string.Empty;
     private string selectedPeriod = string.Empty;
     private string[] cityTemplates = { "Select city" };
-    private string[] periodTemplates = { "Select period", "Day", "Week", "Month", "All" };
+    private readonly string[] periodTemplates = { "Select period", "Day", "Week", "Month", "All" };
     private string Caption => allValuesMode ? "Unique values" : "All values";
     private bool allValuesMode = true;
 
@@ -83,6 +83,7 @@ else
         selectedPeriod = e.Value?.ToString() ?? periodTemplates[0];
         LoadData();
     }
+
     private void SelectedCityChanged(ChangeEventArgs e)
     {
         selectedCity = e.Value?.ToString() ?? cityTemplates[0];
@@ -115,28 +116,28 @@ else
 
         var temperature = forecastsArr.Select(v => v.Main.Temperature);
         var datasetT = new LineDataset<double>(temperature)
-            {
-                BackgroundColor = ColorUtil.ColorHexString(255, 99, 132),
-                Label = "Temperature (C)"
-            };
+        {
+            BackgroundColor = ColorUtil.ColorHexString(255, 99, 132),
+            Label = "Temperature (C)"
+        };
         var pressure = forecastsArr.Select(v => v.Main.Pressure);
         var datasetP = new LineDataset<double>(pressure)
-            {
-                BackgroundColor = ColorUtil.ColorHexString(75, 192, 192),
-                Label = "Pressure (hPa)"
-            };
+        {
+            BackgroundColor = ColorUtil.ColorHexString(75, 192, 192),
+            Label = "Pressure (hPa)"
+        };
         var humidity = forecastsArr.Select(v => v.Main.Humidity);
         var datasetH = new LineDataset<double>(humidity)
-            {
-                BackgroundColor = ColorUtil.ColorHexString(54, 162, 235),
-                Label = "Humidity (%)"
-            };
+        {
+            BackgroundColor = ColorUtil.ColorHexString(54, 162, 235),
+            Label = "Humidity (%)"
+        };
         var speed = forecastsArr.Select(v => v.Wind.Speed);
         var datasetS = new LineDataset<double>(speed)
-            {
-                BackgroundColor = ColorUtil.ColorHexString(255, 205, 86),
-                Label = "Wind (m/s)"
-            };
+        {
+            BackgroundColor = ColorUtil.ColorHexString(255, 205, 86),
+            Label = "Wind (m/s)"
+        };
 
         _temperature.Data.Datasets.Add(datasetT);
         _pressure.Data.Datasets.Add(datasetP);
@@ -148,4 +149,5 @@ else
     {
         cityTemplates = cityTemplates.Union(await ForecastService.GetCitiesNamesAsync()).ToArray();
     }
+
 }
