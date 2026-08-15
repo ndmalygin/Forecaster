@@ -46,7 +46,7 @@ public class OpenWeatherAPIController : IDisposable
     private string GetGeocodeCallUri(string cityName, string stateCode, string countryCode, int limit)
     {
         return
-            $"http://api.openweathermap.org/geo/1.0/direct?q={cityName},{stateCode},{countryCode}&limit={limit}&appid={_apiKey}";
+            $"https://api.openweathermap.org/geo/1.0/direct?q={cityName},{stateCode},{countryCode}&limit={limit}&appid={_apiKey}";
     }
 
     private string GetWeatherCallUri(double lat, double lon, ForecastUnits units)

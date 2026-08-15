@@ -8,20 +8,23 @@ namespace ForecastsRabbitMQDispatcher;
 public class RabbitMQDispatcher : IDisposable
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
-    private readonly IModel _channel;
+    private IChannel _channel;
     private readonly string _rabbitUri;
     public EventHandler<string>? Received;
 
     public RabbitMQDispatcher(string rabbitUri)
     {
         _rabbitUri = rabbitUri;
+    }
 
+    public async Task StartAsync()
+    {
         try
         {
             var factory = new ConnectionFactory { HostName = _rabbitUri };
-            var connection = factory.CreateConnection();
-            _channel = connection.CreateModel();
-            _channel.ExchangeDeclare("forecasts", ExchangeType.Fanout);
+            var connection = await factory.CreateConnectionAsync();
+            _channel = await connection.CreateChannelAsync();
+            await _channel.ExchangeDeclareAsync("forecasts", ExchangeType.Fanout);
         }
         catch (Exception e)
         {
@@ -35,16 +38,20 @@ public class RabbitMQDispatcher : IDisposable
         _channel.Dispose();
     }
 
-    public void PublishMessage(string message)
+    public async Task PublishMessageAsync(string message)
     {
         var body = Encoding.UTF8.GetBytes(message);
+        var props = new RabbitMQ.Client.BasicProperties();
         try
         {
-            _channel.BasicPublish("forecasts",
-                string.Empty,
-                true,
-                null,
-                body);
+            await _channel.BasicPublishAsync(
+                exchange: "forecasts",
+                routingKey: string.Empty,
+                mandatory: true,
+                basicProperties: props, // Вместо null
+                body: new ReadOnlyMemory<byte>(body),
+                cancellationToken: CancellationToken.None // Если токен не используется
+            );
         }
         catch (Exception e)
         {
@@ -53,21 +60,22 @@ public class RabbitMQDispatcher : IDisposable
         }
     }
 
-    public void ConsumeMessage()
+    public async Task ConsumeMessage()
     {
-        var queueName = _channel.QueueDeclare().QueueName;
-        _channel.QueueBind(queueName,
+        var queueName = _channel.QueueDeclareAsync().Result.QueueName;
+        await _channel.QueueBindAsync(queueName,
             "forecasts",
             string.Empty);
 
-        var consumer = new EventingBasicConsumer(_channel);
-        consumer.Received += (model, ea) =>
+        var consumer = new AsyncEventingBasicConsumer(_channel);
+        consumer.ReceivedAsync += (model, ea) =>
         {
             var body = ea.Body.ToArray();
             var message = Encoding.UTF8.GetString(body);
             Received?.Invoke(this, message);
+            return Task.CompletedTask;
         };
-        _channel.BasicConsume(queueName,
+        await _channel.BasicConsumeAsync(queueName,
             true,
             consumer);
     }

@@ -1,14 +1,14 @@
 <Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="MongoDB.Driver" Version="2.19.0"/>
-        <PackageReference Include="Newtonsoft.Json" Version="13.0.2"/>
-        <PackageReference Include="NLog" Version="5.1.1"/>
-        <PackageReference Include="NLog.Mongo" Version="4.6.0.217"/>
+        <PackageReference Include="MongoDB.Driver" Version="3.11.0" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.5-beta1" />
+        <PackageReference Include="NLog" Version="6.1.4" />
+        <PackageReference Include="NLog.Mongo" Version="5.3.0" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\ForecastsCommon\ForecastsCommon.csproj"/>

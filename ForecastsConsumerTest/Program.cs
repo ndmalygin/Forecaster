@@ -7,6 +7,7 @@ var settings = new ConfigurationBuilder<ISettings>()
     .Build();
 
 var rabbitMQDispatcher = new RabbitMQDispatcher(settings.rabbitmq_connection);
+await rabbitMQDispatcher.StartAsync();
 rabbitMQDispatcher.Received += (_, message) => Console.WriteLine($" [x] {message}");
 rabbitMQDispatcher.ConsumeMessage();
 

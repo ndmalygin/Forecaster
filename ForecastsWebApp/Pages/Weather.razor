@@ -37,7 +37,7 @@
 @code {
     private readonly ConcurrentDictionary<string, ForecastsCommon.JsonEntities.Weather> forecasts = new();
 
-    protected override void OnInitialized()
+    protected override async void OnInitialized()
     {
         var settings = new ConfigurationBuilder<ISettings>()
             .UseIniFile(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "forecaster.ini"))
@@ -45,6 +45,7 @@
 
         var weatherExtractor = new WeatherExtractor();
         var rabbitMQDispatcher = new RabbitMQDispatcher(settings.rabbitmq_connection);
+        await rabbitMQDispatcher.StartAsync();
         rabbitMQDispatcher.Received += (_, message) =>
         {
             try
