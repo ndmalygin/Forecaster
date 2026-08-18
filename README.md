@@ -37,7 +37,7 @@ The system is designed following the **Event-Driven Architecture (EDA)** pattern
 ## 💻 Local Development & Setup
 
 ### Prerequisites
-* **.NET SDK 8.0** or later
+* **.NET SDK 10.0** or later
 * **RabbitMQ Server** (running with default AMQP port `5672`)
 * **MongoDB Instance** (running on port `27017`)
 * **OpenWeather API Key** (configured via user-secrets or environment variables)
