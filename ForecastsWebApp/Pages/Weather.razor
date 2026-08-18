@@ -62,7 +62,6 @@
             InvokeAsync(() => { StateHasChanged(); });
         };
 
-        rabbitMQDispatcher.ConsumeMessage();
+        await rabbitMQDispatcher.ConsumeMessageAsync();
     }
-
 }

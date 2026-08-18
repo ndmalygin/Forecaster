@@ -60,7 +60,7 @@ public class RabbitMQDispatcher : IDisposable
         }
     }
 
-    public async Task ConsumeMessage()
+    public async Task ConsumeMessageAsync()
     {
         var queueName = _channel.QueueDeclareAsync().Result.QueueName;
         await _channel.QueueBindAsync(queueName,
