@@ -72,7 +72,7 @@ The application features microservice container templates for cloud-scale packag
   ```bash
   docker build -f Dockerfile.forecasterweb -t forecaster-web .
   ```
-
+## 🐳 Please READ Setup.txt for details !!!
 ---
 
 ## 📝 License
