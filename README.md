@@ -2,6 +2,11 @@
 
 An enterprise-grade, microservice-based system designed to fetch weather data via the external **OpenWeather API**, process it asynchronously via a message broker, store it reliably, and visualize historical data in real-time.
 
+<div style="display: flex; gap: 10px;">
+  <img src="https://github.com/user-attachments/assets/988a38e4-1f52-4e99-8e56-32b3e7f1c572" alt="Снимок экрана 1" style="width: 49%; height: auto;" />
+  <img src="https://github.com/user-attachments/assets/32f76092-7d71-490b-8718-a0f7df71645a" alt="Снимок экрана 2" style="width: 49%; height: auto;" />
+</div>
+
 ---
 
 ## Architecture Overview
