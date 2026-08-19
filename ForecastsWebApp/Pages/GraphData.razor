@@ -1,4 +1,5 @@
 @page "/graphdata"
+@using System.Globalization
 @using ForecastsWebApp.Data
 @using ChartJs.Blazor.LineChart
 @using ChartJs.Blazor.Util
@@ -72,25 +73,25 @@ else
     private string Caption => allValuesMode ? "Unique values" : "All values";
     private bool allValuesMode = true;
 
-    private void Toggle()
+    private async Task  Toggle()
     {
         allValuesMode = !allValuesMode;
-        LoadData();
+        await LoadData();
     }
 
-    private void SelectedPeriodChanged(ChangeEventArgs e)
+    private async Task SelectedPeriodChanged(ChangeEventArgs e)
     {
         selectedPeriod = e.Value?.ToString() ?? periodTemplates[0];
-        LoadData();
+        await LoadData();
     }
 
-    private void SelectedCityChanged(ChangeEventArgs e)
+    private async Task SelectedCityChanged(ChangeEventArgs e)
     {
         selectedCity = e.Value?.ToString() ?? cityTemplates[0];
-        LoadData();
+        await LoadData();
     }
 
-    private async void LoadData()
+    private async Task LoadData()
     {
         if (string.IsNullOrEmpty(selectedCity) || string.IsNullOrEmpty(selectedPeriod))
             return;
@@ -108,10 +109,10 @@ else
         var labels = forecastsArr.Select(v => v.Date);
         foreach (var label in labels)
         {
-            _temperature.Data.Labels.Add(label.ToString());
-            _pressure.Data.Labels.Add(label.ToString());
-            _humidity.Data.Labels.Add(label.ToString());
-            _speed.Data.Labels.Add(label.ToString());
+            _temperature.Data.Labels.Add(label.ToString(CultureInfo.CurrentCulture));
+            _pressure.Data.Labels.Add(label.ToString(CultureInfo.CurrentCulture));
+            _humidity.Data.Labels.Add(label.ToString(CultureInfo.CurrentCulture));
+            _speed.Data.Labels.Add(label.ToString(CultureInfo.CurrentCulture));
         }
 
         var temperature = forecastsArr.Select(v => v.Main.Temperature);
@@ -149,5 +150,4 @@ else
     {
         cityTemplates = cityTemplates.Union(await ForecastService.GetCitiesNamesAsync()).ToArray();
     }
-
 }
