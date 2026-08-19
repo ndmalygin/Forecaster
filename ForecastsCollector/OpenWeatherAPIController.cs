@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
+using System.Net.Http.Json;
 using ForecastsCollector.Enums;
 using ForecastsCollector.JsonEntities;
-using Newtonsoft.Json;
 using NLog;
 
 namespace ForecastsCollector;
@@ -27,14 +27,13 @@ public class OpenWeatherAPIController : IDisposable
         try
         {
             var geoUri = GetGeocodeCallUri(cityName, string.Empty, string.Empty, 1);
-            var responseBody = await _client.GetStringAsync(geoUri);
-            var geoCodes = JsonConvert.DeserializeObject<List<GeoCodes>>(responseBody);
+            var geoCodes = await _client.GetFromJsonAsync<List<GeoCodes>>(geoUri);
             Debug.Assert(geoCodes?.Count == 1);
 
             var weatherUri = GetWeatherCallUri(geoCodes[0].lat, geoCodes[0].lon, ForecastUnits.metric);
-            responseBody = await _client.GetStringAsync(weatherUri);
+            var responseBody = await _client.GetStringAsync(weatherUri);
 
-            return await Task.FromResult(responseBody);
+            return responseBody;
         }
         catch (Exception e)
         {

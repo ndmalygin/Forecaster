@@ -3,6 +3,7 @@ using ForecastsCollector;
 using ForecastsCollector.Enums;
 using ForecastsCommon;
 using ForecastsCommon.JsonEntities;
+using MongoDB.Driver;
 
 namespace ForecastsWebApp.Data;
 
@@ -21,7 +22,7 @@ public class WeatherForecastService
 
     public Task<Weather[]> GetForecastAsync(string city, string period, bool allValuesMode)
     {
-        var mongoDBDispatcher = new MongoDBDispatcher(_mongoUri);
+        using var mongoDBDispatcher = new MongoDBDispatcher(_mongoUri);
         var periodEnum = (Periods)Enum.Parse(typeof(Periods), period);
 
         switch (periodEnum)
@@ -40,9 +41,10 @@ public class WeatherForecastService
         }
     }
 
-    public Task<string[]> GetCitiesNamesAsync()
+    public async Task<List<string>> GetCitiesNamesAsync()
     {
-        var mongoDBDispatcher = new MongoDBDispatcher(_mongoUri);
-        return Task.FromResult(mongoDBDispatcher.GetCities().ToArray());
+        using var mongoDBDispatcher = new MongoDBDispatcher(_mongoUri);
+        var cities = await mongoDBDispatcher.GetCitiesAsync();
+        return await cities.ToListAsync();
     }
 }

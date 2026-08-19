@@ -6,7 +6,7 @@ using NLog;
 
 namespace ForecastsCollector;
 
-public class MongoDBDispatcher
+public class MongoDBDispatcher : IDisposable
 {
     private static readonly Logger Logger = LogManager.GetCurrentClassLogger();
     private readonly MongoClient _client;
@@ -20,13 +20,13 @@ public class MongoDBDispatcher
         _client = new MongoClient(_connectionString);
     }
 
-    public void WriteWeatherData(string city, string weatherData)
+    public async Task WriteWeatherData(string city, string weatherData)
     {
         try
         {
             var document = BsonSerializer.Deserialize<BsonDocument>(weatherData);
             var collection = _client.GetDatabase(_dbName).GetCollection<BsonDocument>(city);
-            collection.InsertOneAsync(document);
+            await collection.InsertOneAsync(document);
         }
         catch (Exception e)
         {
@@ -59,8 +59,13 @@ public class MongoDBDispatcher
             .Select(v => v.First()).OrderBy(d => d.date);
     }
 
-    public IEnumerable<string> GetCities()
+    public async Task<IAsyncCursor<string>> GetCitiesAsync()
     {
-        return _client.GetDatabase(_dbName).ListCollectionNames().ToEnumerable();
+        return await _client.GetDatabase(_dbName).ListCollectionNamesAsync();
+    }
+
+    public void Dispose()
+    {
+        _client.Dispose();
     }
 }

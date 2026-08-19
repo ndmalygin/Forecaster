@@ -9,7 +9,7 @@ var settings = new ConfigurationBuilder<ISettings>()
 
 var cities = settings.cities;
 
-var mongoDBDispatcher = new MongoDBDispatcher(settings.mongodb_connection);
+using var mongoDBDispatcher = new MongoDBDispatcher(settings.mongodb_connection);
 using var rabbitMQDispatcher = new RabbitMQDispatcher(settings.rabbitmq_connection);
 await rabbitMQDispatcher.StartAsync();
 using var forecastsCollector = new OpenWeatherAPIController(settings.api_key);
@@ -19,7 +19,7 @@ while (true)
     foreach (var city in cities)
     {
         var weatherData = await forecastsCollector.GetWeatherAsync(city);
-        mongoDBDispatcher.WriteWeatherData(city, weatherData);
+        await mongoDBDispatcher.WriteWeatherData(city, weatherData);
         var weatherExtractor = new WeatherExtractor();
         var weatherMandatory = weatherExtractor.ExtractMandatoryData(weatherData);
         await rabbitMQDispatcher.PublishMessageAsync(weatherMandatory);
