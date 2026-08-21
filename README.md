@@ -1,20 +1,20 @@
-# Forecaster 🌤️
-
-[![Language](https://shields.io)](https://microsoft.com)
-[![Framework](https://shields.io)](https://microsoft.com)
-[![Infrastructure](https://shields.io)](https://rabbitmq.com)
-[![License: MIT](https://shields.io)](LICENSE)
+# Forecaster
 
 An enterprise-grade, microservice-based system designed to fetch weather data via the external **OpenWeather API**, process it asynchronously via a message broker, store it reliably, and visualize historical data in real-time.
 
+<div style="display: flex; gap: 10px;">
+  <img src="https://github.com/user-attachments/assets/988a38e4-1f52-4e99-8e56-32b3e7f1c572" alt="Снимок экрана 1" style="width: 49%; height: auto;" />
+  <img src="https://github.com/user-attachments/assets/32f76092-7d71-490b-8718-a0f7df71645a" alt="Снимок экрана 2" style="width: 49%; height: auto;" />
+</div>
+
 ---
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 The system is designed following the **Event-Driven Architecture (EDA)** pattern to decouple the ingestion of data from its consumption and processing.
 
 
-### 🧩 Microservice Components
+### Microservice Components
 
 1. **`ForecastsCollector`**: A worker service tasked with polling scheduled weather data from the OpenWeather API and publishing raw events onto the message broker.
 2. **`ForecastsRabbitMQDispatcher`**: An infrastructure layer responsible for handling connection lifecycles, exchanges, topologies, and publishing mechanisms for **RabbitMQ**.
@@ -25,29 +25,28 @@ The system is designed following the **Event-Driven Architecture (EDA)** pattern
 
 ---
 
-## ⚡ Key Architectural Highlights
+## Key Architectural Highlights
 
-* **Asynchronous Decoupling:** Heavy heavy-lifting API calls and storage logic are disconnected using RabbitMQ, protecting the system against high-latency drops.
+* **Asynchronous Decoupling:** API calls and storage logic are disconnected using RabbitMQ, protecting the system against high-latency drops.
 * **NoSQL Persistence:** Utilizes MongoDB to effortlessly store flexible, nested JSON weather matrices without rigid relational object-mapping (ORM) bottlenecks.
 * **Container Ready:** Fully equipped with standalone `Dockerfile` configurations (`Dockerfile.forecasterservice` & `Dockerfile.forecasterweb`), making it ready for cloud-native orchestration (Kubernetes/Docker Compose).
 * **Modern Web Tech:** Leverages Blazor Server to achieve fast, single-page-application (SPA) data streaming without writing heavy Javascript boilerplate code.
 
 ---
 
-## 💻 Local Development & Setup
+## Local Development & Setup
 
 ### Prerequisites
 * **.NET SDK 10.0** or later
 * **RabbitMQ Server** (running with default AMQP port `5672`)
 * **MongoDB Instance** (running on port `27017`)
-* **OpenWeather API Key** (configured via user-secrets or environment variables)
+* **OpenWeather API Key** (configured *.ini)
 
 ### Step-by-Step Launch
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com
-   cd Forecaster
+   git clone https://github.com/ndmalygin/Forecaster
    ```
 
 2. Configure your OpenWeather API settings in the `ForecastsCollector` configuration settings or environment variables.
@@ -60,22 +59,12 @@ The system is designed following the **Event-Driven Architecture (EDA)** pattern
 
 ---
 
-## 🐳 Docker Deployment
+## Docker Deployment
 
-The application features microservice container templates for cloud-scale packaging:
-
-* To build the core backend processing service:
-  ```bash
-  docker build -f Dockerfile.forecasterservice -t forecaster-service .
-  ```
-* To build the Blazor visualization web app:
-  ```bash
-  docker build -f Dockerfile.forecasterweb -t forecaster-web .
-  ```
-
+### Please READ Setup.txt for details !
 ---
 
-## 📝 License
+## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
