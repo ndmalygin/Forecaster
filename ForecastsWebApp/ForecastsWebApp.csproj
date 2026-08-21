@@ -7,6 +7,13 @@
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Config.Net" Version="5.3.0-pre.1" />
+        <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.3.0" /> <!-- опционально для Azure -->
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.10.0" />
+        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.10.0" /> <!-- Для отправки в Jaeger/Collector -->
+
+        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.10.0" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.10.0" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.Runtime" Version="1.10.0" />
     </ItemGroup>
     <ItemGroup>
         <ProjectReference Include="..\ForecastsCollector\ForecastsCollector.csproj"/>

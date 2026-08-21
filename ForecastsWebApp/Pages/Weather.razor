@@ -3,6 +3,9 @@
 @using ForecastsCommon
 @using ForecastsRabbitMQDispatcher
 @using System.Collections.Concurrent
+@using Microsoft.Extensions.Logging
+@inject ILogger<Weather> Logger
+
 <PageTitle>Current weather</PageTitle>
 
 <h1>Current weather</h1>
@@ -52,6 +55,8 @@
             {
                 var weather = weatherExtractor.ExtractMandatoryDataObject(message);
                 forecasts[weather.City] = weather;
+
+                Logger.LogInformation($"Weather data loaded for {weather.City}.");
             }
             catch (Exception e)
             {
